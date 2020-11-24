@@ -1,0 +1,9 @@
+<div class="tabs__titles">
+	<div *ngFor="let tab of (tabs$ | async);index as i" class="tabs__title"
+		[ngClass]="{'tabs__title--active': activeTabIndex === i}" (click)=" activeTabIndexChange.emit(i)">
+		<ng-container *ngTemplateOutlet="tab.title"></ng-container>
+	</div>
+</div>
+<div *ngFor="let tab of (tabs$ | async);index as i">
+	<ng-container *ngTemplateOutlet="tab.content"></ng-container>
+</div>
