@@ -19,7 +19,7 @@ import { TabComponent } from "./tab/tab.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsComponent implements OnInit {
-  @Input("activeTab") activeTabIndex: number;
+  @Input("activeTab") activeTabIndex: number = 0;
   @Output("activeTabChange") activeTabIndexChange: EventEmitter<
     number
   > = new EventEmitter();
@@ -31,17 +31,25 @@ export class TabsComponent implements OnInit {
 
   ngOnChanges() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activeTabIndex = 0;
+    this.emitIndexChange();
+  }
 
   ngAfterContentInit() {
-    this.activeTabIndex = 0;
-
     this.tabs$ = this.tabsQuery.changes.pipe(
       startWith(this.tabsQuery),
       map(tabsQuery => tabsQuery.toArray()),
       tap(tabsArray => {
-        if (this.activeTabIndex >= tabsArray.length) this.activeTabIndex = 0;
+        if (this.activeTabIndex >= tabsArray.length) {
+          this.activeTabIndex = 0;
+          this.emitIndexChange();
+        }
       })
     );
+  }
+
+  emitIndexChange() {
+    setTimeout(() => this.activeTabIndexChange.emit(this.activeTabIndex));
   }
 }

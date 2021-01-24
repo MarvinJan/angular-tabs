@@ -8,13 +8,11 @@
 <br />
 
 <tabs [(activeTab)]="activeTab">
-  <tab *ngFor="let tab of tabs; index as i">
-    <tab-title> Tab <b>{{ tab }}</b> title </tab-title>
-    <tab-content
-      *ngIf="activeTab === i || !activeTab && i === 0 || activeTab >= tabs.length && i === 0"
-    >
-      Tab <b>{{ tab }}</b> content
-      <test [tab]="tab"></test>
-    </tab-content>
-  </tab>
+	<tab *ngFor="let tab of tabs; index as i">
+		<tab-title> Tab <b>{{ tab }}</b> title </tab-title>
+		<tab-content *ngIf="i === activeTab">
+			Tab <b>{{ tab }}</b> content
+			<test [tab]="tab"></test>
+		</tab-content>
+	</tab>
 </tabs>
